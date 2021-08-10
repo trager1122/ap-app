@@ -1,14 +1,13 @@
-import { rosybrown } from "color-name";
 import React from "react";
 import { View, TouchableOpacity, StyleSheet, Image, Text } from "react-native";
 import APLogo from "../assets/AP-logo.jpg";
 
-export default StartScreen = () => {
+export default StartScreen = ({navigation})=> {
   return (
     <View>
       <Image style={styles.imageStyle} source={APLogo} />
       <View>
-        <TouchableOpacity style={styles.buttonStyle} onPress={()=>alert("Start Button Pressed")}>
+        <TouchableOpacity style={styles.buttonStyle} onPress={()=>navigation.navigate('Login')}>
           <Text style={styles.textStyle}>Get Started</Text>
         </TouchableOpacity>
       </View>
