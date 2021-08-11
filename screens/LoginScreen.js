@@ -1,12 +1,14 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, TouchableOpacityBase } from 'react-native';
 
 export default LoginScreen=()=>{
-    const [userName, onChangeUserName] = React.useState("");
-    const [password, onChangePassword] = React.useState("");
+    const [userName, onChangeUserName] = useState("");
+    const [password, onChangePassword] = useState("");
 
     return <View>
         <TextInput
+        autoCapitalize="none"
+        autoCorrect={false}
         placeholder="User Name"
         style={styles.input}
         onChangeText={onChangeUserName}
@@ -14,6 +16,7 @@ export default LoginScreen=()=>{
       />
       <TextInput
         placeholder="Password"
+        secureTextEntry={true}
         style={styles.input}
         onChangeText={onChangePassword}
         value={password}
@@ -39,7 +42,8 @@ const styles = StyleSheet.create({
         backgroundColor: "#68a0cf",
         borderRadius: 10,
         borderWidth: 1,
-        borderColor: "#fff"
+        borderColor: "#fff",
+        margin:12
     },
     textStyle:{
         fontSize: 24,
