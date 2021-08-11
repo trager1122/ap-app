@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, TouchableOpacityBase } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 
-export default LoginScreen=()=>{
+export default LoginScreen=( {navigation} )=>{
     const [userName, onChangeUserName] = useState("");
     const [password, onChangePassword] = useState("");
 
@@ -21,7 +21,7 @@ export default LoginScreen=()=>{
         onChangeText={onChangePassword}
         value={password}
       />
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate('Account')}>
           <Text style={styles.textStyle}>Log in to your Account</Text>
       </TouchableOpacity>
     </View>
