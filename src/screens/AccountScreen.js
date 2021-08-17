@@ -1,22 +1,22 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 
-export default AccountScreen=()=>{
+export default AccountScreen=({navigation, user})=>{
     return <View>
         <View>
-            <Text>Name</Text>
+            <Text>`${user.params.name}`</Text>
         </View>
         <View>
-            <Text>Application Type</Text>
+            <Text>`${user.params.apptype}`</Text>
         </View>
         <View>
-            <Text>Applicant Year</Text>
+            <Text>`${user.params.appyear}`</Text>
         </View>
         <View>
-            <Text>Semester</Text>
+            <Text>`${user.params.semester}`</Text>
         </View>
         <View>
-            <Text>Application Status</Text>
+            <Text>`${user.params.appstatus}`</Text>
         </View>
     </View>
 }

@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import admpros from '../api/admpros';
 
 export default LoginScreen=( {navigation} )=>{
     const [userName, onChangeUserName] = useState("");
@@ -11,17 +12,17 @@ export default LoginScreen=( {navigation} )=>{
         autoCorrect={false}
         placeholder="User Name"
         style={styles.input}
-        onChangeText={onChangeUserName}
+        onChangeText={text=>onChangeUserName(text)}
         value={userName}
       />
       <TextInput
         placeholder="Password"
         secureTextEntry={true}
         style={styles.input}
-        onChangeText={onChangePassword}
+        onChangeText={text=>onChangePassword(text)}
         value={password}
       />
-      <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate('Account')}>
+      <TouchableOpacity style={styles.button} onPress={()=>handleLogin(userName,password)}>
           <Text style={styles.textStyle}>Log in to your Account</Text>
       </TouchableOpacity>
     </View>
@@ -50,3 +51,18 @@ const styles = StyleSheet.create({
         textAlign: "center"
     }
 });
+
+const handleLogin=async( userName, password )=>{
+  try{
+    const response= await admpros.get('/login',{
+      params:{
+        userName,
+        password
+      }
+    })
+    setUser(response.data);
+    navigation.navigate('Account', {user})
+  } catch (err){
+    console.log(err)
+  }
+}
