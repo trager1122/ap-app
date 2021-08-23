@@ -1,6 +1,6 @@
 import React from "react";
 import { View, TouchableOpacity, StyleSheet, Image, Text } from "react-native";
-import APLogo from "../assets/AP-logo.jpg";
+import APLogo from "../../assets/AP-logo.jpg";
 
 export default StartScreen = ({navigation})=> {
   return (

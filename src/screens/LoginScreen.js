@@ -1,10 +1,22 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import admpros from '../api/admpros';
 
 export default LoginScreen=( {navigation} )=>{
     const [userName, onChangeUserName] = useState("");
     const [password, onChangePassword] = useState("");
+    const [user,setUser]=useState([]);
+
+    const handleLogin=async(userName,password)=>{
+      try{
+        const response= await admpros.get(`/login?EmailAddress=${userName}&password=${password}`);
+        console.log(response.data)
+        setUser(response.data);
+        navigation.navigate('Account', {user})
+      } catch (err){
+        console.log(err)
+      }
+    }
 
     return <View>
         <TextInput
@@ -12,15 +24,13 @@ export default LoginScreen=( {navigation} )=>{
         autoCorrect={false}
         placeholder="User Name"
         style={styles.input}
-        onChangeText={text=>onChangeUserName(text)}
-        value={userName}
+        onChangeText={(email)=>onChangeUserName(email)}
       />
       <TextInput
         placeholder="Password"
         secureTextEntry={true}
         style={styles.input}
-        onChangeText={text=>onChangePassword(text)}
-        value={password}
+        onChangeText={(password)=>onChangePassword(password)}
       />
       <TouchableOpacity style={styles.button} onPress={()=>handleLogin(userName,password)}>
           <Text style={styles.textStyle}>Log in to your Account</Text>
@@ -52,17 +62,3 @@ const styles = StyleSheet.create({
     }
 });
 
-const handleLogin=async( userName, password )=>{
-  try{
-    const response= await admpros.get('/login',{
-      params:{
-        userName,
-        password
-      }
-    })
-    setUser(response.data);
-    navigation.navigate('Account', {user})
-  } catch (err){
-    console.log(err)
-  }
-}
