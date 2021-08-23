@@ -9,7 +9,7 @@ export default LoginScreen=( {navigation} )=>{
 
     const handleLogin=async(userName,password)=>{
       try{
-        const response= await admpros.get(`/login?EmailAddress=${userName}&password=${password}`);
+        const response= await admpros.post(`/login?EmailAddress=${userName}&password=${password}`);
         console.log(response.data)
         setUser(response.data);
         navigation.navigate('Account', {user})
