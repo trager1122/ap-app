@@ -2,7 +2,7 @@ import React from "react";
 import { View, TouchableOpacity, StyleSheet, Image, Text } from "react-native";
 import APLogo from "../../assets/AP-logo.jpg";
 
-export default StartScreen = ({navigation})=> {
+export default StartScreen = ( {navigation} )=> {
   return (
     <View>
       <Image style={styles.imageStyle} source={APLogo} />

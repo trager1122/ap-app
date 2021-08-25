@@ -1,12 +1,10 @@
 import axios from 'axios';
-require('dotenv').config();
 const BASE_URL = 'https://mobile.admissionpros.com/api/demo';
-const token=process.env.TOKEN;
+import { token } from '../../../ap-app/token';
 
 export default axios.create({
-    baseURL: {BASE_URL},
+    baseURL: BASE_URL,
     headers: {
-        Authorization: `Bearer ${token}`,
-        
+        Authorization: `Bearer ${token}`
     }
 })
