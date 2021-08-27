@@ -1,37 +1,16 @@
-import React, { useState, useEffect} from 'react';
+import React from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import admpros from '../api/admpros';
+
 
 export default LoginScreen=( {navigation} )=>{
-    const [userName, onChangeUserName] = useState("");
-    // const [password, onChangePassword] = useState("");
-    const [users,setUsers]=useState([]);
-    const [user,setUser]=useState({});
-
-  
-    const loadUserData=async()=>{
-      try{
-        const response= await admpros.get('/');
-        setUsers(response.data);
-      } catch(err){
-        console.log(err)
-      }
-    }
-
-    loadUserData();
-    
-    const handleLogin=()=>{
-      setUser(users.filter((user)=>user.EmailAddress==userName));
-      console.log(user);
-    }
-
+  const [userName,setUserName] = useState("");
     return <View>
       <TextInput
         autoCapitalize="none"
         autoCorrect={false}
         placeholder="User Name"
         style={styles.input}
-        onChangeText={(email)=>onChangeUserName(email)}
+        onChangeText={(email)=>setUserName(email)}
       />
       {/* <TextInput
         placeholder="Password"
