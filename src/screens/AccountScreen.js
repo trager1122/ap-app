@@ -4,19 +4,19 @@ import { Text, View, StyleSheet } from 'react-native';
 export default AccountScreen=({navigation, user})=>{
     return <View>
         <View>
-            <Text>`${user.params.name}`</Text>
+            <Text>`${user.FirstName} ${user.LastName}`</Text>
         </View>
         <View>
-            <Text>`${user.params.apptype}`</Text>
+            <Text>`${user.ApplicantType}`</Text>
         </View>
         <View>
-            <Text>`${user.params.appyear}`</Text>
+            <Text>`${user.ApplicationYear}`</Text>
         </View>
         <View>
-            <Text>`${user.params.semester}`</Text>
+            <Text>`${user.Semester}`</Text>
         </View>
         <View>
-            <Text>`${user.params.appstatus}`</Text>
+            <Text>`${user.ApplicationStatus}`</Text>
         </View>
     </View>
 }
