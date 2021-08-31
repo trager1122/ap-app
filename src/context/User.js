@@ -8,7 +8,7 @@ const UserContext= createContext();
 export const UserProvider=({ children })=>{
     const [jwt, setJWT]=useState({});
     const [users, setUsers]=useState([])
-    const [user, setUser]=useState({});
+    const [user, setUser]=useState([]);
 
     const getToken=async (username, password) => {
         try {
