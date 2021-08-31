@@ -1,22 +1,24 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { Text, View, StyleSheet } from 'react-native';
+import UserContext from '../context/User';
 
-export default AccountScreen=({navigation, user})=>{
+export default AccountScreen=({navigation})=>{
+    const { data }=useContext(UserContext);
     return <View>
         <View>
-            <Text>`${user.FirstName} ${user.LastName}`</Text>
+            <Text>`${data.FirstName} ${data.LastName}`</Text>
         </View>
         <View>
-            <Text>`${user.ApplicantType}`</Text>
+            <Text>`${data.ApplicantType}`</Text>
         </View>
         <View>
-            <Text>`${user.ApplicationYear}`</Text>
+            <Text>`${data.ApplicationYear}`</Text>
         </View>
         <View>
-            <Text>`${user.Semester}`</Text>
+            <Text>`${data.Semester}`</Text>
         </View>
         <View>
-            <Text>`${user.ApplicationStatus}`</Text>
+            <Text>`${data.ApplicationStatus}`</Text>
         </View>
     </View>
 }

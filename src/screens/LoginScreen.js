@@ -1,17 +1,10 @@
 import React, { useContext, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import { apiUserName, apiPassword } from '../../token';
 import { UserContext } from '../context/User';
 
 export default LoginScreen=( {navigation} )=>{
-  const [userName,setUserName] = useState("");
-  const {getToken, loadUsersData, selectUser}=useContext(UserContext);
-
-  const loginUser=()=>{
-    getToken(apiUserName,apiPassword)
-    loadUsersData(jwt)
-    selectUser(userName)
-  }
+  const [userName, setUserName] = useState("");
+  const { selectUser }=useContext(UserContext);
     return <View>
       <TextInput
         autoCapitalize="none"
@@ -27,7 +20,7 @@ export default LoginScreen=( {navigation} )=>{
         onChangeText={(password)=>onChangePassword(password)}
       /> */}
       <TouchableOpacity style={styles.button} 
-      onPress={()=>loginUser()}>
+      onPress={selectUser(userName)}>
           <Text style={styles.textStyle}>Log in to your Account</Text>
       </TouchableOpacity>
     </View>
