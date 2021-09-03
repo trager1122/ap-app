@@ -1,28 +1,27 @@
-import React, {useContext} from 'react';
-import { Text, View, StyleSheet } from 'react-native';
-import UserContext from '../context/User';
+import React, { useContext } from "react";
+import { Text, View, StyleSheet } from "react-native";
+import { Button} from "react-native-elements";
+import UserContext from "../context/User";
 
-export default AccountScreen=({navigation})=>{
-    const { data }=useContext(UserContext);
-    return <View>
-        <View>
-            <Text>`${data.FirstName} ${data.LastName}`</Text>
-        </View>
-        <View>
-            <Text>`${data.ApplicantType}`</Text>
-        </View>
-        <View>
-            <Text>`${data.ApplicationYear}`</Text>
-        </View>
-        <View>
-            <Text>`${data.Semester}`</Text>
-        </View>
-        <View>
-            <Text>`${data.ApplicationStatus}`</Text>
-        </View>
+export default AccountScreen = ({ navigation }) => {
+  const { userData, loadUserData, loadApps } = useContext(UserContext);
+  loadUserData();
+  return (
+    <View>
+      <View>
+        <Text>
+          `Name: ${userData.FirstName} ${userData.LastName}`
+        </Text>
+      </View>
+      <View>
+        <Text>`Email: ${userData.EmailAddress}`</Text>
+      </View>
+      <View>
+          <Button title="See Your Applications" 
+          onPress={loadApps}/>
+      </View>
     </View>
-}
+  );
+};
 
-const styles=StyleSheet.create({
-
-})
+const styles = StyleSheet.create({});

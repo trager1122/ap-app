@@ -2,12 +2,16 @@ import React from "react";
 import { View, TouchableOpacity, StyleSheet, Image, Text } from "react-native";
 import APLogo from "../../assets/AP-logo.jpg";
 
-export default StartScreen = ( {navigation} )=> {
+export default StartScreen = ({ navigation }) => {
   return (
     <View>
+      <Text style={styles.textStyle}>Welcome to</Text>
       <Image style={styles.imageStyle} source={APLogo} />
       <View>
-        <TouchableOpacity style={styles.buttonStyle} onPress={()=>navigation.navigate('Login')}>
+        <TouchableOpacity
+          style={styles.buttonStyle}
+          onPress={() => navigation.navigate("Login")}
+        >
           <Text style={styles.textStyle}>Get Started</Text>
         </TouchableOpacity>
       </View>
@@ -32,8 +36,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#fff",
   },
-  textStyle:{
-      fontSize: 24,
-      textAlign: "center"
-  }
+  textStyle: {
+    fontSize: 24,
+    textAlign: "center",
+  },
 });
