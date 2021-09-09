@@ -4,8 +4,8 @@ import { Button} from "react-native-elements";
 import UserContext from "../context/User";
 
 export default AccountScreen = ({ navigation }) => {
-  const { userData, loadUserData, loadApps } = useContext(UserContext);
-  loadUserData();
+  const { userData, loadApps } = useContext(UserContext);
+
   return (
     <View>
       <View>

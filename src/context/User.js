@@ -1,14 +1,15 @@
 import React, { useState, createContext } from "react";
 import admpros from "../api/admpros";
 import * as SecureStore from "expo-secure-store";
-const jwt = require("jsonwebtoken");
+import JWT from "expo-jwt";
+
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [token, setToken] = useState({});
   const [userInfo, setUserInfo] = useState({});
-  const [personID, setPersonID]=useState({});
-  const [userApps, setUserApps]=useState([]);
+  const [personID, setPersonID] = useState({});
+  const [userApps, setUserApps] = useState([]);
 
   // For initial login on app
   const getToken = async (username, password) => {
@@ -17,7 +18,7 @@ export const UserProvider = ({ children }) => {
         username,
         password,
       });
-      setToken(response.data);
+      await setToken(response.data);
       await SecureStore.setItemAsync("token", token);
     } catch (err) {
       console.error(err);
@@ -26,15 +27,14 @@ export const UserProvider = ({ children }) => {
 
   //For login to persist
   const checkAuth = async () => {
-      const storedToken = await SecureStore.getItemAsync("token");
-      if (storedToken){
-        setToken(storedToken);
-        return true;
-      }
-      else{
-        alert("User is not currently logged in!");
-        return false;
-      }
+    const storedToken = await SecureStore.getItemAsync("token");
+    if (storedToken) {
+      setToken(storedToken);
+      return true;
+    } else {
+      alert("User is not currently logged in!");
+      return false;
+    }
   };
 
   //If user logs out, this will delete locally stored token and they will have to log back in to receive a new one
@@ -43,10 +43,10 @@ export const UserProvider = ({ children }) => {
   };
 
   const loadUserInfo = async () => {
-    let decodedToken=jwt.decode(token);
+    let decodedToken = JWT.decode(token);
     setPersonID(decodedToken.payload.PersonID);
     try {
-      const response = await admpros.get("/info/"+JSON.stringify(personID), {
+      const response = await admpros.get("/info/" + JSON.stringify(personID), {
         Headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -57,13 +57,16 @@ export const UserProvider = ({ children }) => {
     }
   };
 
-  const loadUserApps= async () => {
+  const loadUserApps = async () => {
     try {
-      const response = await admpros.get("/applications/"+JSON.stringify(personID), {
-        Headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await admpros.get(
+        "/applications/" + JSON.stringify(personID),
+        {
+          Headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       setUserApps(response.data);
     } catch (err) {
       console.error(err);
@@ -71,7 +74,18 @@ export const UserProvider = ({ children }) => {
   };
 
   return (
-    <UserContext.Provider value={{ userData: userInfo, appsData: userApps, getToken, checkAuth, logout, loadUserInfo, loadUserApps}}>
+    <UserContext.Provider
+      value={{
+        token,
+        userData: userInfo,
+        AppData: userApps,
+        getToken,
+        checkAuth,
+        logout,
+        loadUserInfo,
+        loadUserApps,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );

@@ -6,20 +6,20 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
-import { UserContext } from "../context/User";
+import UserContext from "../context/User";
 
 export default LoginScreen = ({ navigation }) => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const { getToken, checkAuth } = useContext(UserContext);
+  const { getToken, checkAuth, loadUserInfo } = useContext(UserContext);
 
-  useEffect(() => {
-    if (checkAuth()) {
-      navigation.navigate("Account");
-    } else {
-      navigation.navigate("Login");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (checkAuth()) {
+  //     navigation.navigate("Account");
+  //   } else {
+  //     navigation.navigate("Login");
+  //   }
+  // }, []);
 
   return (
     <View>
@@ -38,7 +38,11 @@ export default LoginScreen = ({ navigation }) => {
       />
       <TouchableOpacity
         style={styles.button}
-        onPress={getToken(userName, password)}
+        onPress={() => {
+          getToken(userName, password);
+          loadUserInfo;
+          navigation.navigate('Account');
+        }}
       >
         <Text style={styles.textStyle}>Log in to your Account</Text>
       </TouchableOpacity>
