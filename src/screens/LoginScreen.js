@@ -38,11 +38,12 @@ export default LoginScreen = ({ navigation }) => {
       />
       <TouchableOpacity
         style={styles.button}
-        onPress={() => {
-          getToken(userName, password);
-          loadUserInfo;
-          navigation.navigate('Account');
-        }}
+        onPress={() => {{
+          getToken(userName, password);    
+        }
+        loadUserInfo();
+        navigation.navigate('Account');
+      }}
       >
         <Text style={styles.textStyle}>Log in to your Account</Text>
       </TouchableOpacity>

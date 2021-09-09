@@ -6,7 +6,7 @@ import JWT from "expo-jwt";
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [token, setToken] = useState({});
+  const [token, setToken] = useState("");
   const [userInfo, setUserInfo] = useState({});
   const [personID, setPersonID] = useState({});
   const [userApps, setUserApps] = useState([]);
@@ -19,7 +19,8 @@ export const UserProvider = ({ children }) => {
         password,
       });
       await setToken(response.data);
-      await SecureStore.setItemAsync("token", token);
+      console.log(token);
+      SecureStore.setItemAsync("token", token);
     } catch (err) {
       console.error(err);
     }
@@ -43,10 +44,8 @@ export const UserProvider = ({ children }) => {
   };
 
   const loadUserInfo = async () => {
-    let decodedToken = JWT.decode(token);
-    setPersonID(decodedToken.payload.PersonID);
     try {
-      const response = await admpros.get("/info/" + JSON.stringify(personID), {
+      const response = await admpros.get("/info", {
         Headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -76,9 +75,8 @@ export const UserProvider = ({ children }) => {
   return (
     <UserContext.Provider
       value={{
-        token,
-        userData: userInfo,
-        AppData: userApps,
+        userInfo,
+        userApps,
         getToken,
         checkAuth,
         logout,
