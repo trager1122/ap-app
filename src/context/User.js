@@ -18,9 +18,8 @@ export const UserProvider = ({ children }) => {
         username,
         password,
       });
-      await setToken(response.data);
-      console.log(token);
-      SecureStore.setItemAsync("token", token);
+      setToken(response.data);
+      await SecureStore.setItemAsync("token", token);
     } catch (err) {
       console.error(err);
     }
@@ -28,14 +27,9 @@ export const UserProvider = ({ children }) => {
 
   //For login to persist
   const checkAuth = async () => {
-    const storedToken = await SecureStore.getItemAsync("token");
-    if (storedToken) {
-      setToken(storedToken);
-      return true;
-    } else {
-      alert("User is not currently logged in!");
-      return false;
-    }
+    SecureStore.isAvailableAsync("token")
+      ? setToken(storedToken)
+      : alert("User is not currently logged in!");
   };
 
   //If user logs out, this will delete locally stored token and they will have to log back in to receive a new one
@@ -45,12 +39,17 @@ export const UserProvider = ({ children }) => {
 
   const loadUserInfo = async () => {
     try {
-      const response = await admpros.get("/info", {
-        Headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setUserInfo(response.data);
+      console.log(await SecureStore.isAvailableAsync("token"))
+      // let storedToken = await SecureStore.getItemAsync("token");
+      // console.log(storedToken);
+      // const response = await admpros.get("/info", {
+      //   Headers: {
+      //     Authorization: `Bearer ${storedToken}`,
+      //   },
+      // });
+      // console.log(response.data);
+      // setUserInfo(response.data);
+      // console.log(userInfo)
     } catch (err) {
       console.error(err);
     }
@@ -75,6 +74,7 @@ export const UserProvider = ({ children }) => {
   return (
     <UserContext.Provider
       value={{
+        token,
         userInfo,
         userApps,
         getToken,

@@ -9,41 +9,38 @@ import {
 import UserContext from "../context/User";
 
 export default LoginScreen = ({ navigation }) => {
-  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { getToken, checkAuth, loadUserInfo } = useContext(UserContext);
+  const { getToken, loadUserInfo } = useContext(UserContext);
 
-  // useEffect(() => {
-  //   if (checkAuth()) {
-  //     navigation.navigate("Account");
-  //   } else {
-  //     navigation.navigate("Login");
-  //   }
-  // }, []);
+  const handleLogin=async()=>{
+    await getToken(email,password);
+    await loadUserInfo;
+    // navigation.navigate('Account');
+  }
 
   return (
     <View>
       <TextInput
         autoCapitalize="none"
         autoCorrect={false}
-        placeholder="User Name"
+        placeholder="E-mail Address"
         style={styles.input}
-        onChangeText={(username) => setUserName(username)}
+        onChangeText={setEmail}
+        value={email}
       />
       <TextInput
         placeholder="Password"
         secureTextEntry={true}
         style={styles.input}
-        onChangeText={(password) => setPassword(password)}
+        onChangeText={setPassword}
+        autoCapitalize="none"
+        autoCorrect={false}
+        value={password}
       />
       <TouchableOpacity
         style={styles.button}
-        onPress={() => {{
-          getToken(userName, password);    
-        }
-        loadUserInfo();
-        navigation.navigate('Account');
-      }}
+        onPress={ handleLogin }
       >
         <Text style={styles.textStyle}>Log in to your Account</Text>
       </TouchableOpacity>
