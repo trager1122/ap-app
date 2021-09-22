@@ -10,6 +10,7 @@ export const UserProvider = ({ children }) => {
   const [userInfo, setUserInfo] = useState({});
   const [personID, setPersonID] = useState({});
   const [userApps, setUserApps] = useState([]);
+  SecureStore.ALWAYS;
 
   // For initial login on app
   const getToken = async (username, password) => {
@@ -26,11 +27,11 @@ export const UserProvider = ({ children }) => {
   };
 
   //For login to persist
-  const checkAuth = async () => {
-    SecureStore.isAvailableAsync("token")
-      ? setToken(storedToken)
-      : alert("User is not currently logged in!");
-  };
+  // const checkAuth = async () => {
+  //   SecureStore.isAvailableAsync()
+  //     ? setToken(storedToken)
+  //     : alert("User is not currently logged in!");
+  // };
 
   //If user logs out, this will delete locally stored token and they will have to log back in to receive a new one
   const logout = async () => {
@@ -78,7 +79,6 @@ export const UserProvider = ({ children }) => {
         userInfo,
         userApps,
         getToken,
-        checkAuth,
         logout,
         loadUserInfo,
         loadUserApps,
