@@ -1,26 +1,33 @@
-import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { SafeAreaProvider } from "react-native-safe-area-context";
-import StartScreen from "./src/screens/StartScreen";
-import LoginScreen from "./src/screens/LoginScreen";
-import AccountScreen from "./src/screens/AccountScreen";
-import { UserProvider } from "./src/context/User";
+import React from 'react';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 
-const Stack = createNativeStackNavigator();
+import AccountScreen from './src/screens/AccountScreen';
+import SigninScreen from './src/screens/SigninScreen';
+import SignupScreen from './src/screens/SignupScreen';
+import { Provider as AuthProvider } from './src/context/AuthContext';
+import { setNavigator } from './src/navigationRef';
+import ResolveAuthScreen from './src/screens/ResolveAuthScreen';
 
-export default App = () => {
+const switchNavigator = createSwitchNavigator({
+  ResolveAuth: ResolveAuthScreen,
+  loginFlow: createStackNavigator({
+    Signup: SignupScreen,
+    Signin: SigninScreen
+  }),
+    Account: AccountScreen
+});
+
+const App = createAppContainer(switchNavigator);
+
+export default () => {
   return (
-    <SafeAreaProvider>
-      <UserProvider>
-        <NavigationContainer>
-          <Stack.Navigator initialRouteName="Start">
-            <Stack.Screen name="Account" component={AccountScreen} />
-            <Stack.Screen name="Start" component={StartScreen} />
-            <Stack.Screen name="Login" component={LoginScreen} />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </UserProvider>
-    </SafeAreaProvider>
+    <AuthProvider>
+      <App
+        ref={(navigator) => {
+          setNavigator(navigator);
+        }}
+      />
+    </AuthProvider>
   );
 };
