@@ -15,7 +15,7 @@ const switchNavigator = createSwitchNavigator({
     Signup: SignupScreen,
     Signin: SigninScreen
   }),
-    Account: AccountScreen
+  Account: AccountScreen
 });
 
 const App = createAppContainer(switchNavigator);

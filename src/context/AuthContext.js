@@ -22,7 +22,7 @@ const tryLocalSignin = (dispatch) => async () => {
   const token = await AsyncStorage.getItem("token");
   if (token) {
     dispatch({ type: "signin", payload: token });
-    navigate("TrackList");
+    navigate("Account");
   } else {
     navigate("Signup");
   }
@@ -34,11 +34,10 @@ const clearErrorMessage = (dispatch) => () => {
 
 const signup = (dispatch) => async ({ email, password }) => {
   try {
-    const response = await admpros.post("/signup", { email, password });
+    const response = await admpros.post("/token", { email, password });
     await AsyncStorage.setItem("token", response.data);
     dispatch({ type: "signin", payload: response.data });
-
-    navigate("TrackList");
+    navigate("Account");
   } catch (err) {
     dispatch({
       type: "add_error",
@@ -60,6 +59,8 @@ const signin = (dispatch) => async ({ email, password }) => {
     });
   }
 };
+
+const getApplications=(dispatch)=>async()
 
 const signout = (dispatch) => async () => {
   await AsyncStorage.removeItem("token");
